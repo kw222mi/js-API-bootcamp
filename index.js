@@ -1,7 +1,11 @@
 async function fetchData(url) {
-  const response = await fetch(url);
-  const data = await response.json();
-  return data;
+  try {
+    const response = await fetch(url);
+    const data = await response.json();
+    return data;
+  } catch (error) {
+    console.error(error);
+  }
 }
 
 const writeToConsole = (data) => {
@@ -25,22 +29,33 @@ const createDomElement = (data) => {
 };
 
 const renderFilteredBooks = (books) => {
-      books.forEach((element) => {
-        if(element.pages < 500) {
-        createDomElement(element.title);
-        }
-      });
-}
+  books.forEach((element) => {
+    if (element.pages < 500) {
+      createDomElement(element.title);
+    }
+  });
+};
+
+const renderFilteredVisitors = (visitors) => {
+  visitors.forEach((element) => {
+    if (element.attending === true) {
+      createDomElement(element.name);
+    }
+  });
+};
 
 (async () => {
-  let pokemons = await fetchData("https://majazocom.github.io/Data/pokemons.json"  );
-  writeToConsole(pokemons);
-  renderTheData(pokemons);
+  let pokemons = await fetchData("https://majazocom.github.io/Data/pokemons.json");
+  // writeToConsole(pokemons);
+  // renderTheData(pokemons);
 
   let dogs = await fetchData("https://majazocom.github.io/Data/dogs.json");
-  writeToConsole(dogs);
-  renderTheData(dogs);
+  // writeToConsole(dogs);
+  // renderTheData(dogs);
 
   let books = await fetchData("https://majazocom.github.io/Data/books.json");
-  renderFilteredBooks(books)
+  // renderFilteredBooks(books)
+
+  let visitors = await fetchData("https://majazocom.github.io/Data/attendees.json");
+  renderFilteredVisitors(visitors);
 })();
