@@ -1,6 +1,6 @@
-async function logMovies() {
+async function fetchData(url) {
   const response = await fetch(
-    "https://majazocom.github.io/Data/pokemons.json"
+    `${url}`
   );
   const pokemons = await response.json();
   
@@ -18,4 +18,5 @@ const renderTheData = (data) => {
 
 }
 
-logMovies();
+fetchData("https://majazocom.github.io/Data/pokemons.json");
+fetchData("https://majazocom.github.io/Data/dogs.json");
